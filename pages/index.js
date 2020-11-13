@@ -1,65 +1,82 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 
-export default function Home() {
+import Image from '../components/atoms/Image';
+import Block from '../components/molecules/Block';
+import CategoryCardList from '../components/organisms/CategoryCardList';
+import useInView from '../hooks/useInView';
+import theme from '../styles/theme';
+
+export async function getStaticProps() {
+  const res = await fetch('http://localhost:3000/api/categories?limit=4');
+  const { categories } = await res.json();
+
+  return {
+    props: { categories },
+  };
+}
+
+export default function Home({ categories }) {
+  const isDesktopMin = useMediaQuery({ minWidth: theme.breakpoints.desktop });
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+    <div className="home">
+      <Block
+        className="section"
+        heading="Solve quizzes and create your own ones"
+        paragraph="Commodo vestibulum, volutpat at orci morbi curabitur justo. Neque ut nisl dictum feugiat donec at cras magna. Id lectus porttitor egestas."
+        btns={[{ text: 'Get started', href: '/categories' }]}
+        imgSrc="/quiz.svg"
+        dark={true}
+      />
+      <Image className="wave" src="/wave.svg" unsized />
+      <CategoryCardList
+        className="section"
+        heading="Dive into quizzes"
+        items={categories.map(
+          ({ category_id, category_name, category_description }) => ({
+            heading: category_name,
+            paragraph: category_description,
+            iconSrc: '/computer.svg',
+            href: `/categories/${category_id}`,
+          })
+        )}
+      />
+      <Image className="wave" src="/wave.svg" rotate="180deg" />
+      <Block
+        className="section"
+        heading="Collect points and climb on ladder"
+        paragraph="Ac, morbi vitae amet, senectus odio ridiculus at. Tempor, consectetur vulputate tortor sed consectetur id amet purus. Ac ultricies vestibulum turpis lacinia vel sed at id in. Ac commodo nunc posuere nibh vitae quam."
+        btns={[
+          { text: 'View quizzes' },
+          { text: 'Watch add', variant: 'secondary' },
+        ]}
+        imgSrc="/points.svg"
+        reverse={true}
+        dark={true}
+      />
+      <Image className="wave" src="/wave.svg" unsized />
+      <Block
+        className="section"
+        heading="Create own quiz and check others’ knowledge"
+        paragraph="Ac, morbi vitae amet, senectus odio ridiculus at. Tempor, consectetur vulputate tortor sed consectetur id amet purus. Ac ultricies vestibulum turpis lacinia vel sed at id in. Ac commodo nunc posuere nibh vitae quam."
+        btns={[{ text: 'Create quiz' }]}
+        imgSrc="/creator.svg"
+      />
+      <Image className="wave" src="/wave.svg" rotate="180deg" />
+      <style jsx>{`
+        .home {
+          display: flex;
+          flex-direction: column;
+          :global(.section) {
+            padding: 96px
+              ${isDesktopMin ? theme.paddings.desktop : theme.paddings.phone};
+          }
+          :global(.wave) {
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
-  )
+  );
 }
