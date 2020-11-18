@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
   return { props: { quizzes } };
 }
 
-export default function Category({ quizzes }) {
+export default function Category({ quizzes=[] }) {
   const isDesktopMin = useMediaQuery({ minWidth: theme.breakpoints.desktop });
 
   return (

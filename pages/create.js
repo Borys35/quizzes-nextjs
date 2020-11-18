@@ -36,10 +36,10 @@ function Create() {
   }
 
   async function handleSubmitQuestions() {
-    await fetch(`/api/categories/${category}`, {
+    await fetch(`/api/categories/${basicInfo.category}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(basicInfo),
+      body: JSON.stringify({...basicInfo, questions}),
     });
   }
 

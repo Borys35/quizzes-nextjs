@@ -20,6 +20,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-responsive": "^8.1.0",
+    "react-share": "^4.3.1",
     "serverless-mysql": "^1.5.4",
     "sql-template-strings": "^2.2.2",
     "yup": "^0.29.3"

@@ -7,6 +7,7 @@ import Paragraph from '../../components/atoms/Paragraph';
 import Image from '../../components/atoms/Image';
 import theme from '../../styles/theme';
 import ParagraphsWithDots from '../molecules/ParagraphsWithDots';
+import getConvertedDate from '../../utils/dateConverter';
 
 export default function QuizInfo({
   heading,
@@ -31,7 +32,7 @@ export default function QuizInfo({
         <ParagraphsWithDots
           items={[
             {
-              text: `Created at: ${new Date(createdAt).toUTCString()}`,
+              text: `Created ${getConvertedDate(createdAt)}`,
               color: 'white',
             },
             { text: `${questionsCount} questions`, color: 'white' },

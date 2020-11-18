@@ -19,11 +19,11 @@ module.exports = async (req, res) => {
     // check if user exists
     // if not then save user in db
     let [existingUser] = await db.query(
-      SQL`SELECT user_id FROM users WHERE email=${userMetadata.email}`
+      SQL`SELECT user_id FROM users WHERE user_email=${userMetadata.email}`
     );
     if (!existingUser) {
       existingUser = await db.query(
-        SQL`INSERT INTO users (email, username) VALUES (${userMetadata.email}, dummy_username)`
+        SQL`INSERT INTO users (user_email, user_name) VALUES (${userMetadata.email}, "dummy_username")`
       );
     }
 

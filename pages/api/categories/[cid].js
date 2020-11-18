@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     const { name, description, image, questions } = body;
 
     await db.query(
-      SQL`INSERT INTO quizzes (quiz_name, quiz_description, creator_id, category_id) VALUES (${name}, ${description}, ${image} 1, ${parseInt(
+      SQL`INSERT INTO quizzes (quiz_name, quiz_description, quiz_image, creator_id, category_id) VALUES (${name}, ${description}, ${image}, 1, ${parseInt(
         cid
       )});`
     );

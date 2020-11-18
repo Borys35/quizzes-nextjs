@@ -1,26 +1,31 @@
-import React from 'react';
-import Link from 'next/link';
-import { useMediaQuery } from 'react-responsive';
+import React from "react";
+import Link from "next/link";
+import { useMediaQuery } from "react-responsive";
 
-import theme from '../../styles/theme';
-import NavLink from '../atoms/NavLink';
-import Heading from '../atoms/Heading';
-import Image from '../atoms/Image';
-import Button from '../atoms/Button';
+import { useUser } from "../../providers/UserProvider";
+import theme from "../../styles/theme";
+import NavLink from "../atoms/NavLink";
+import Heading from "../atoms/Heading";
+import Image from "../atoms/Image";
+import Button from "../atoms/Button";
 
 export default function Navbar() {
-  const isTabletMin = useMediaQuery({ minWidth: theme.breakpoints.tablet });
+  const isWideTabletMin = useMediaQuery({
+    minWidth: theme.breakpoints.wideTablet,
+  });
   const isDesktopMin = useMediaQuery({ minWidth: theme.breakpoints.desktop });
+  const [user] = useUser();
 
   return (
     <nav className="nav">
       <Heading size="md">
         <Link href="/">Quizzes.net</Link>
       </Heading>
-      {isTabletMin ? (
+      {isWideTabletMin ? (
         <div>
           <NavLink href="/">Home</NavLink>
-          <NavLink href="/create">Create</NavLink>
+          <NavLink href="/create">Make a quiz</NavLink>
+          {user && <NavLink href="/profile">Profile</NavLink>}
           <Button href="/login" size="sm">
             Sign up
           </Button>

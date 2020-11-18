@@ -7,12 +7,14 @@ import Button from '../atoms/Button';
 import theme from '../../styles/theme';
 
 export default function BasicInfoForm({ value, onSetValue, onSubmit }) {
-  const { name, description } = value;
+  const { name, description, image, category } = value;
 
   const formik = useFormik({
     initialValues: {
       name,
       description,
+      image,
+      category,
     },
     validationSchema: Yup.object({
       name: Yup.string().min(3).max(255).required(),
@@ -20,7 +22,7 @@ export default function BasicInfoForm({ value, onSetValue, onSubmit }) {
     }),
     onSubmit: (values) => {
       onSetValue(values);
-      // onSubmit();
+      onSubmit();
     },
   });
 
